@@ -1,0 +1,13 @@
+CREATE DATABASE sample;
+
+USE sample;
+
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id` varchar(23) NOT NULL,
+  `nombre` varchar(30) NOT NULL,
+  `apellido` varchar(30) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `fechaNacimiento` varchar(80) NOT NULL
+);
+
+SELECT * FROM usuario;
