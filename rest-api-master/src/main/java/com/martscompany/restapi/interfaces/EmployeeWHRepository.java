@@ -1,7 +1,5 @@
 package com.martscompany.restapi.interfaces;
 
-
-import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,17 +13,23 @@ import com.martscompany.restapi.exceptions.ExceptionMessages;
 
 @Repository
 public interface EmployeeWHRepository extends JpaRepository<EmployeeWH, Integer>, JpaSpecificationExecutor<EmployeeWH> {
-	
+	 
 	 @Transactional
 	    @Modifying
-	 @Query(value = " SELECT w.worked_hours FROM employee_worked_hours w inner join employee e on e.id = w.employee_id "	 		
-	 + "WHERE w.worked_hours < 20 and e.id=? ", nativeQuery = true)
-     public Optional<EmployeeWH> findByWH(@Param("id") Integer id);
+	 @Query(value = "SELECT w.employee_id, w.worked_hours, w.worked_date"
+	 		+ "FROM employee_worked_hours w"
+	 		+ "inner join employee e on e.id = w.employee_id"
+	 		+ "WHERE w.worked_hours < 20 and e.id=? and worked_hours = ? and worked_date = ?", nativeQuery = true)
+	 public ResponseEntity<ExceptionMessages> findByWHE(@Param("employee_id") Integer val,
+														@Param("worked_hours") Integer val2,
+														@Param("worked_date") String val3);
 	 
 	 @Transactional
 	    @Modifying
 	 @Query(value = "SELECT w.worked_hours FROM employee_worked_hours w INNER JOIN  employee e ON w.employee_id = e.id "	 		
-	 + "WHERE w.worked_date between ? and ? ", nativeQuery = true)
-	 public ResponseEntity<ExceptionMessages> findByWD(@Param("worked_date") String val,@Param("worked_date") String val2);
+	 + "WHERE  e.id = ? and w.worked_date between ? and ? ", nativeQuery = true)
+	 public ResponseEntity<ExceptionMessages> findByWD(@Param("id") Integer val, @Param("worked_date") String val2,@Param("worked_date") String val3);
+	 
+
 
 }

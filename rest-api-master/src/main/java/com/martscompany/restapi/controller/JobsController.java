@@ -54,18 +54,32 @@ public class JobsController {
 	}
 	
 	@GetMapping("/viewsWS/{val}/{val2}")
-	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable String val, @PathVariable String val2){
+	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable Integer val, @PathVariable String val2, @PathVariable String val3){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate fecha1 = LocalDate.parse(val, formatter);
-		LocalDate fecha2 = LocalDate.parse(val2, formatter);
+		LocalDate fecha1 = LocalDate.parse(val2, formatter);
+		LocalDate fecha2 = LocalDate.parse(val3, formatter);
 
 		if(fecha1.isAfter(fecha2)){
-			return repo.findByWS(val,val2);
+			return repo.findByWS(val,val2,val3);
 		}else{
 			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
 		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
 		}
 		
+	}
+	
+	@GetMapping("/viewsJobEmp/{val}")
+	public ResponseEntity<ExceptionMessages> viewsJobEmp(@PathVariable Jobs val){
+		
+		 repo.findByJobEmp(val.getName());
+		
+		 if(repo != null) {
+			 repo.findById(val.getId());
+		 }else{
+			 ExceptionMessages error = new ExceptionMessages("Not found","El puesto no existe");
+		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+		 }
+		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 	}
 }

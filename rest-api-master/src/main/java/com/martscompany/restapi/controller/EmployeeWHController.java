@@ -27,9 +27,30 @@ public class EmployeeWHController {
 	@Autowired
 	private EmployeeWHRepository repo;
 	
-	@PostMapping("/add")
-	public EmployeeWH add(@RequestBody EmployeeWH val) {
-		return repo.save(val);
+	@PostMapping("/addWH/{val}/{val2}/{val3}")
+	public  ResponseEntity<ExceptionMessages> addWH(@RequestBody EmployeeWH val, EmployeeWH val2, EmployeeWH val3) {
+			
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate fecha1 = LocalDate.parse(val3.geWorked_date(), formatter);
+		LocalDate fecha2 = LocalDate.parse(LocalDate.now().format(formatter));
+
+		if(!fecha1.isAfter(fecha2)){
+			
+			repo.findByWHE(val.getEmployee_id(),val2.getWorked_hours(), val3.geWorked_date()); 
+			
+			if(repo == null){
+        		 repo.save(val);
+    		}else{
+    			 ExceptionMessages error = new ExceptionMessages("Error","El empleado ya tiene registro de horas");
+    			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+    		}
+			 			 
+		}else{
+			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
+		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+		}
+				
+		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 	}
 	
 	@GetMapping("/views")
@@ -52,25 +73,22 @@ public class EmployeeWHController {
 	   repo.deleteById(val);
 	   return "Id : " +val+ " delete";
 	}
-	
-	@GetMapping("/viewsWH/{val}")
-	public Optional<EmployeeWH> viewsWH(@PathVariable Integer val ){
-		return repo.findByWH(val);
-	}
-	
-	@GetMapping("/viewsWD/{val}/{val2}")
-	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable String val, @PathVariable String val2){
+
+	@GetMapping("/viewsWD/{val}/{val2}/{val3}")
+	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable Integer val, @PathVariable String val2, @PathVariable String val3){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate fecha1 = LocalDate.parse(val, formatter);
-		LocalDate fecha2 = LocalDate.parse(val2, formatter);
+		LocalDate fecha1 = LocalDate.parse(val2, formatter);
+		LocalDate fecha2 = LocalDate.parse(val3, formatter);
 
 		if(fecha1.isAfter(fecha2)){
-			return repo.findByWD(val,val2);
+			return repo.findByWD(val,val2,val3);
 		}else{
 			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
 		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
 		}
 		
 	}
+	
+
 }
