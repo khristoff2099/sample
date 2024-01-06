@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +27,7 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeRepository repo;
-	
-	@PostMapping("/add")
-	public Employee add(@RequestBody Employee val) {
-		return repo.save(val);
-	}
-	
+
 	@GetMapping("/views")
 	public List<Employee> views(){
 		return repo.findAll();
@@ -53,17 +49,29 @@ public class EmployeeController {
 	   return "Id : " +val+ " delete";
 	}
 	
-	@GetMapping("/viewsAges/{val}")
-	public HttpStatus viewsAges(@PathVariable String val){
-        LocalDate today = LocalDate.now();
-        LocalDate birth = LocalDate.parse(val, DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
+	@PostMapping("/addEmp/{val}/{val2}/{val3}/{val4}/{val5}")
+	public ResponseEntity<ExceptionMessages> addEmp(@RequestBody Employee val, Employee val2, Employee val3, Employee val4, Employee val5) {
+		LocalDate today = LocalDate.now();
+        LocalDate birth = LocalDate.parse(val5.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
         Period age = birth.until(today);
-
-		if(age.getYears() < today.getYear()-18){
-			return HttpStatus.OK;
-		}else{
-			return HttpStatus.NOT_ACCEPTABLE;
-		}
+        
+        repo.findByEmp(val.getName(),val2.getLast_name(),val3.getGender_id(),val4.getJob_id(), val5.getBirthdate()); 
+        
+        if(repo.toString() == null || repo.toString().isEmpty()) {
+        	
+        	if(age.getYears() < today.getYear()-18){
+        		repo.save(val);
+    		}else{
+    			 ExceptionMessages error = new ExceptionMessages("Error","El empleado no es mayor de edad");
+    			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+    		}
+        	
+        }else {
+        	ExceptionMessages error = new ExceptionMessages("Error","El ya existe en la BD");
+			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+        }
+        
+    	 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 		
 	}
 	
