@@ -20,6 +20,7 @@ public interface JobsRepository extends JpaRepository<Jobs, Integer>, JpaSpecifi
 	 @Transactional
 	    @Modifying
 	 @Query(value = "SELECT j.salary from jobs j inner join employee e on e.job_id = j.id inner join employee_worked_hours w on w.employee_id = e.id "
-	 		+ "WHERE w.worked_date between ? and ? ", nativeQuery = true)
+	 		//+ "WHERE w.worked_date between ? and ? ", nativeQuery = true)
+			 + "WHERE w.worked_date between ? and ? ")
 	 public ResponseEntity<ExceptionMessages> findByWS(@Param("worked_date") String val,@Param("worked_date") String val2);
 }
