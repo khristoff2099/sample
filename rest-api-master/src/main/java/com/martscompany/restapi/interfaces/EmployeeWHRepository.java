@@ -18,15 +18,13 @@ public interface EmployeeWHRepository extends JpaRepository<EmployeeWH, Integer>
 	
 	 @Transactional
 	    @Modifying
-	 @Query(value = " SELECT w.worked_hours FROM employee_worked_hours w inner join employee e on e.id = w.employee_id "
-	 		//+ "WHERE w.worked_hours < 20 and e.id=? ", nativeQuery = true)
+	 @Query(value = " SELECT w.worked_hours FROM employee_worked_hours w inner join employee e on e.id = w.employee_id "	 		
 	 + "WHERE w.worked_hours < 20 and e.id=? ", nativeQuery = true)
      public Optional<EmployeeWH> findByWH(@Param("id") Integer id);
 	 
 	 @Transactional
 	    @Modifying
-	 @Query(value = "SELECT w.worked_hours FROM employee_worked_hours w INNER JOIN  employee e ON w.employee_id = e.id "
-	 		//+ "WHERE w.worked_date between ? and ? ", nativeQuery = true)
+	 @Query(value = "SELECT w.worked_hours FROM employee_worked_hours w INNER JOIN  employee e ON w.employee_id = e.id "	 		
 	 + "WHERE w.worked_date between ? and ? ", nativeQuery = true)
 	 public ResponseEntity<ExceptionMessages> findByWD(@Param("worked_date") String val,@Param("worked_date") String val2);
 
