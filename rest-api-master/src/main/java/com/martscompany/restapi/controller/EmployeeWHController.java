@@ -33,8 +33,7 @@ public class EmployeeWHController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(LocalDate.now().format(formatter));
-		
-		
+				
 		if(repo.findByEmployeeExist(val.getId()) != null){
 		
 				if(repo.findByEmployeeWH(val.getId(),val.geWorked_date()) == null) {

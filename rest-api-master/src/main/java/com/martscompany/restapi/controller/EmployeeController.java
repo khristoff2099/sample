@@ -34,9 +34,7 @@ public class EmployeeController {
         LocalDate birth = LocalDate.parse(val.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
         Period age = birth.until(today);
         
-        repo.findByEmp(val.getName(),val.getLast_name(),val.getGender_id(),val.getJob_id(), val.getBirthdate()); 
-        
-        if(repo == null) {
+        if(repo.findByEmp(val.getName(),val.getLast_name(),val.getGender_id(),val.getJob_id(), val.getBirthdate()) == null) {
         	
         	if(age.getYears() < today.getYear()-18){
         		repo.save(val);
@@ -66,9 +64,7 @@ public class EmployeeController {
 	@GetMapping("/viewsJobEmp/{val}")//Ejercicio3
 	public ResponseEntity<ExceptionMessages> viewsJobEmp(@PathVariable Employee val){
 		
-		 repo.findByJobEmp(val.getId(),val.getJob_id());
-		
-		 if(repo != null) {
+		 if(repo.findByJobEmp(val.getId(),val.getJob_id()) != null) {
 			 repo.findById(val.getId());
 		 }else{
 			 ExceptionMessages error = new ExceptionMessages("Error","El puesto no existe");
