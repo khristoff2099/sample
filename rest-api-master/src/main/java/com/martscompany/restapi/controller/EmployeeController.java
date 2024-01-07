@@ -3,9 +3,7 @@ package com.martscompany.restapi.controller;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,17 +46,6 @@ public class EmployeeController {
 			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
         }
     	 return new ResponseEntity<ExceptionMessages>(HttpStatus.OK);
-	}
-
-	@GetMapping("/views")
-	public List<Employee> views(){
-		return repo.findAll();
-	}
-	
-	@GetMapping("/views/{val}")
-	public Optional<Employee> views(@PathVariable Integer val){
-		return repo.findById(val);
-		
 	}
 	
 	@GetMapping("/viewsJobEmp/{val}")//Ejercicio3

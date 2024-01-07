@@ -2,8 +2,6 @@ package com.martscompany.restapi.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,16 +61,6 @@ public class EmployeeWHController {
 		}
 		
 		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
-	}
-	
-	@GetMapping("/views")
-	public List<EmployeeWH> views(){
-		return repo.findAll();
-	}
-	
-	@GetMapping("/views/{val}")
-	public Optional<EmployeeWH> views(@PathVariable Integer val){
-		return repo.findById(val);
 	}
 	
 	@GetMapping("/viewsWD/{val}")//Ejercicio4
