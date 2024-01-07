@@ -26,7 +26,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeRepository repo;
 	
-	@PostMapping(value="/addEmp/{val}") //Ejercicio1
+	@PostMapping(value="/addEmp/") //Ejercicio1
 	public ResponseEntity<ExceptionMessages> addEmp(@RequestBody Employee val) {
 		LocalDate today = LocalDate.now();
         LocalDate birth = LocalDate.parse(val.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));

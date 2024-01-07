@@ -25,7 +25,7 @@ public class EmployeeWHController {
 	@Autowired
 	private EmployeeWHRepository repo;
 	
-	@PostMapping(value="/addWH/{val}")//Ejercicio2
+	@PostMapping(value="/addWH/")//Ejercicio2
 	public  ResponseEntity<ExceptionMessages> addWH(@RequestBody EmployeeWH val) {
 			
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
