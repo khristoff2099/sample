@@ -22,27 +22,27 @@ public class JobsController {
 	@Autowired
 	private JobsRepository repo;
 	
-	@PostMapping("/add")
+	@PostMapping(value="/add")
 	public Jobs add(@RequestBody Jobs val) {
 		return repo.save(val);
 	}
 	
-	@GetMapping("/views")
+	@GetMapping(value="/views")
 	public List<Jobs> views(){
 		return repo.findAll();
 	}
 	
-	@GetMapping("/views/{val}")
+	@GetMapping(value="/views/{val}")
 	public Optional<Jobs> views(@PathVariable Integer val){
 		return repo.findById(val);
 	}
 	
-	@PutMapping("/update")
+	@PutMapping(value="/update")
 	public Jobs views(@RequestBody Jobs val){
 		return repo.save(val);
 	}
 	
-	@DeleteMapping("/delete/{val}")
+	@DeleteMapping(value="/delete/{val}")
 	public String delete(@PathVariable Integer val){
 	   repo.deleteById(val);
 	   return "Id : " +val+ " delete";

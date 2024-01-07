@@ -26,7 +26,7 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeRepository repo;
 	
-	@PostMapping("/addEmp/{val}") //Ejercicio1
+	@PostMapping(value="/addEmp/{val}") //Ejercicio1
 	public ResponseEntity<ExceptionMessages> addEmp(@RequestBody Employee val) {
 		LocalDate today = LocalDate.now();
         LocalDate birth = LocalDate.parse(val.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
@@ -48,7 +48,7 @@ public class EmployeeController {
     	 return new ResponseEntity<ExceptionMessages>(HttpStatus.OK);
 	}
 	
-	@GetMapping("/viewsJobEmp/{val}")//Ejercicio3
+	@GetMapping(value="/viewsJobEmp/{val}")//Ejercicio3
 	public ResponseEntity<ExceptionMessages> viewsJobEmp(@PathVariable Employee val){
 		
 		 if(repo.findByJobEmp(val.getId(),val.getJob_id()) != null) {
@@ -60,12 +60,12 @@ public class EmployeeController {
 		 return new ResponseEntity<ExceptionMessages>(HttpStatus.OK);
 	}
 	
-	@PutMapping("/update")
+	@PutMapping(value="/update")
 	public Employee views(@RequestBody Employee val){
 		return repo.save(val);
 	}
 	
-	@DeleteMapping("/delete/{val}")
+	@DeleteMapping(value="/delete/{val}")
 	public String delete(@PathVariable Integer val){
 	   repo.deleteById(val);
 	   return "Id : " +val+ " delete";

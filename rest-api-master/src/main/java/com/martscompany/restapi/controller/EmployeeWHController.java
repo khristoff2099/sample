@@ -25,7 +25,7 @@ public class EmployeeWHController {
 	@Autowired
 	private EmployeeWHRepository repo;
 	
-	@PostMapping("/addWH/{val}")//Ejercicio2
+	@PostMapping(value="/addWH/{val}")//Ejercicio2
 	public  ResponseEntity<ExceptionMessages> addWH(@RequestBody EmployeeWH val) {
 			
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -63,7 +63,7 @@ public class EmployeeWHController {
 		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 	}
 	
-	@GetMapping("/viewsWD/{val}")//Ejercicio4
+	@GetMapping(value="/viewsWD/{val}")//Ejercicio4
 	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable EmployeeWH val){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -86,7 +86,7 @@ public class EmployeeWHController {
 		
 	}
 	
-	@GetMapping("/viewsWS/{val}")//Ejercicio5
+	@GetMapping(value="/viewsWS/{val}")//Ejercicio5
 	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable EmployeeWH val){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -108,12 +108,12 @@ public class EmployeeWHController {
 		
 	}
 	
-	@PutMapping("/update")
+	@PutMapping(value="/update")
 	public EmployeeWH views(@RequestBody EmployeeWH val){
 		return repo.save(val);
 	}
 	
-	@DeleteMapping("/delete/{val}")
+	@DeleteMapping(value="/delete/{val}")
 	public String delete(@PathVariable Integer val){
 	   repo.deleteById(val);
 	   return "Id : " +val+ " delete";

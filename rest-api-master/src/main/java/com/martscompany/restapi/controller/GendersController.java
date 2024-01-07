@@ -22,27 +22,27 @@ public class GendersController {
 	@Autowired
 	private GendersRepository repo;
 	
-	@PostMapping("/add")
+	@PostMapping(value="/add")
 	public Genders add(@RequestBody Genders val) {
 		return repo.save(val);
 	}
 	
-	@GetMapping("/views")
+	@GetMapping(value="/views")
 	public List<Genders> views(){
 		return repo.findAll();
 	}
 	
-	@GetMapping("/views/{val}")
+	@GetMapping(value="/views/{val}")
 	public Optional<Genders> views(@PathVariable Integer val){
 		return repo.findById(val);
 	}
 	
-	@PutMapping("/update")
+	@PutMapping(value="/update")
 	public Genders views(@RequestBody Genders val){
 		return repo.save(val);
 	}
 	
-	@DeleteMapping("/delete/{val}")
+	@DeleteMapping(value="/delete/{val}")
 	public String delete(@PathVariable Integer val){
 	   repo.deleteById(val);
 	   return "Id : " +val+ " delete";
