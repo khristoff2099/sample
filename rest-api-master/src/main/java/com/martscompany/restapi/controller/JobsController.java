@@ -42,17 +42,6 @@ public class JobsController {
 		return repo.findById(val);
 	}
 	
-	@PutMapping("/update")
-	public Jobs views(@RequestBody Jobs val){
-		return repo.save(val);
-	}
-	
-	@DeleteMapping("/delete/{val}")
-	public String delete(@PathVariable Integer val){
-	   repo.deleteById(val);
-	   return "Id : " +val+ " delete";
-	}
-	
 	@GetMapping("/viewsWS/{val}/{val2}/{val3}")//Ejercicio5
 	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable Integer val, @PathVariable String val2, @PathVariable String val3){
 		
@@ -82,4 +71,16 @@ public class JobsController {
 		 }
 		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 	}
+	
+	@PutMapping("/update")
+	public Jobs views(@RequestBody Jobs val){
+		return repo.save(val);
+	}
+	
+	@DeleteMapping("/delete/{val}")
+	public String delete(@PathVariable Integer val){
+	   repo.deleteById(val);
+	   return "Id : " +val+ " delete";
+	}
+	
 }

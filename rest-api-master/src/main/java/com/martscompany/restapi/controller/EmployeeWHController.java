@@ -63,17 +63,6 @@ public class EmployeeWHController {
 		return repo.findById(val);
 	}
 	
-	@PutMapping("/update")
-	public EmployeeWH views(@RequestBody EmployeeWH val){
-		return repo.save(val);
-	}
-	
-	@DeleteMapping("/delete/{val}")
-	public String delete(@PathVariable Integer val){
-	   repo.deleteById(val);
-	   return "Id : " +val+ " delete";
-	}
-
 	@GetMapping("/viewsWD/{val}/{val2}/{val3}")//Ejercicio4
 	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable Integer val, @PathVariable String val2, @PathVariable String val3){
 		
@@ -90,5 +79,15 @@ public class EmployeeWHController {
 		
 	}
 	
+	@PutMapping("/update")
+	public EmployeeWH views(@RequestBody EmployeeWH val){
+		return repo.save(val);
+	}
+	
+	@DeleteMapping("/delete/{val}")
+	public String delete(@PathVariable Integer val){
+	   repo.deleteById(val);
+	   return "Id : " +val+ " delete";
+	}
 
 }

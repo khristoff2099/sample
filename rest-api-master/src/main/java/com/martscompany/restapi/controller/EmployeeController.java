@@ -27,27 +27,6 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeRepository repo;
-
-	@GetMapping("/views")
-	public List<Employee> views(){
-		return repo.findAll();
-	}
-	
-	@GetMapping("/views/{val}")
-	public Optional<Employee> views(@PathVariable Integer val){
-		return repo.findById(val);
-	}
-	
-	@PutMapping("/update")
-	public Employee views(@RequestBody Employee val){
-		return repo.save(val);
-	}
-	
-	@DeleteMapping("/delete/{val}")
-	public String delete(@PathVariable Integer val){
-	   repo.deleteById(val);
-	   return "Id : " +val+ " delete";
-	}
 	
 	@PostMapping("/addEmp/{val}/{val2}/{val3}/{val4}/{val5}") //Ejercicio1
 	public ResponseEntity<ExceptionMessages> addEmp(@RequestBody Employee val, Employee val2, Employee val3, Employee val4, Employee val5) {
@@ -73,6 +52,27 @@ public class EmployeeController {
         
     	 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 		
+	}
+
+	@GetMapping("/views")
+	public List<Employee> views(){
+		return repo.findAll();
+	}
+	
+	@GetMapping("/views/{val}")
+	public Optional<Employee> views(@PathVariable Integer val){
+		return repo.findById(val);
+	}
+	
+	@PutMapping("/update")
+	public Employee views(@RequestBody Employee val){
+		return repo.save(val);
+	}
+	
+	@DeleteMapping("/delete/{val}")
+	public String delete(@PathVariable Integer val){
+	   repo.deleteById(val);
+	   return "Id : " +val+ " delete";
 	}
 	
 }
