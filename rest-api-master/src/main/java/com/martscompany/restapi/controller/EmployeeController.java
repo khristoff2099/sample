@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.martscompany.restapi.entity.Employee;
+import com.martscompany.restapi.entity.Jobs;
 import com.martscompany.restapi.exceptions.ExceptionMessages;
 import com.martscompany.restapi.interfaces.EmployeeRepository;
 
@@ -47,16 +47,15 @@ public class EmployeeController {
 	}
 
 	@GetMapping(value="/viewsJobEmp/{val}")//Ejercicio3
-	public ResponseEntity<ExceptionMessages> viewsJobEmp(@PathVariable Employee val){
-		
-		 if(repo.findByJobEmp(val.getId(),val.getJob_id()) != null) {
-			 repo.findById(val.getId());
+	public Optional<Employee> viewsJobEmp(@PathVariable Employee val){			
+		 if(repo.findByJob(val.getJob_id()) != null) {
+			 repo.findByJobEmp(val.getJob_id());
 		 }else{
 			 ExceptionMessages error = new ExceptionMessages("Error","El puesto no existe");
-		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
-		 }
-		 return new ResponseEntity<ExceptionMessages>(HttpStatus.OK);
-	}
+			 error.getMessage();
+		 }		 
+		 return repo.findByJobEmp(val.getJob_id());
+	}	
 	
 	@PutMapping(value="/update")
 	public Employee views(@RequestBody Employee val){

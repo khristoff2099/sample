@@ -1,5 +1,6 @@
 package com.martscompany.restapi.interfaces;
 
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,11 +30,19 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
 	 
 	 @Transactional
 	    @Modifying
-	 @Query(value = "SELECT e.name,e.last_name,j.name FROM jobs j"
-	 		+ "inner join employee e"
-	 		+ "on j.id = e.job_id"
-	 		+ "where e.id = ? and e.job_id = ?", nativeQuery = true)
-	 public Employee findByJobEmp(@Param("id") Integer id, @Param("job_id") Integer job_id);
+	 @Query(value = "SELECT e.id, e.name,e.last_name,e.birthdate,j.name, g.name \r\n"
+	 		+ "FROM jobs j\r\n"
+	 		+ "inner join employee e\r\n"
+	 		+ "on j.id = e.job_id\r\n"
+	 		+ "inner join genders g\r\n"
+	 		+ "on e.gender_id = g.id\r\n"
+	 		+ "where e.job_id = ?", nativeQuery = true)
+	 public Optional<Employee> findByJobEmp(@Param("job_id") Integer job_id);
+	 
+	 @Transactional
+	    @Modifying
+	 @Query(value = "select * from jobs where id = ?", nativeQuery = true)
+	 public Optional<Employee> findByJob(@Param("id") Integer id);
 
 }
 
