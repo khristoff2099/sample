@@ -49,9 +49,7 @@ public class EmployeeController {
         	ExceptionMessages error = new ExceptionMessages("Error","El empleado ya existe en la BD");
 			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
         }
-        
     	 return new ResponseEntity<ExceptionMessages>(HttpStatus.OK);
-		
 	}
 
 	@GetMapping("/views")

@@ -48,8 +48,7 @@ public class EmployeeWHController {
 		}else{
 			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
 		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
-		}
-				
+		}			
 		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 	}
 	
