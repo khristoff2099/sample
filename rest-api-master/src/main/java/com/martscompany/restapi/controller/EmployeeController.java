@@ -45,7 +45,7 @@ public class EmployeeController {
     			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
     		}
         	
-        }else {
+        }else{
         	ExceptionMessages error = new ExceptionMessages("Error","El empleado ya existe en la BD");
 			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
         }

@@ -53,12 +53,12 @@ public class EmployeeWHController {
 						     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
 						}		
 				
-				}else {
+				}else{
 					ExceptionMessages error = new ExceptionMessages("Error","El empleado ya tiene registro de horas");
 					 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
 				}
 				
-		}else {
+		}else{
 			ExceptionMessages error = new ExceptionMessages("Error","El empleado no existe");
 			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);	
 		}
