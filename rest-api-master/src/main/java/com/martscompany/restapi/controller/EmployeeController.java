@@ -28,13 +28,13 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeRepository repo;
 	
-	@PostMapping("/addEmp/{val}/{val2}/{val3}/{val4}/{val5}") //Ejercicio1
-	public ResponseEntity<ExceptionMessages> addEmp(@RequestBody Employee val, Employee val2, Employee val3, Employee val4, Employee val5) {
+	@PostMapping("/addEmp/{val}") //Ejercicio1
+	public ResponseEntity<ExceptionMessages> addEmp(@RequestBody Employee val) {
 		LocalDate today = LocalDate.now();
-        LocalDate birth = LocalDate.parse(val5.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
+        LocalDate birth = LocalDate.parse(val.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
         Period age = birth.until(today);
         
-        repo.findByEmp(val.getName(),val2.getLast_name(),val3.getGender_id(),val4.getJob_id(), val5.getBirthdate()); 
+        repo.findByEmp(val.getName(),val.getLast_name(),val.getGender_id(),val.getJob_id(), val.getBirthdate()); 
         
         if(repo.toString() == null || repo.toString().isEmpty()) {
         	
@@ -46,11 +46,11 @@ public class EmployeeController {
     		}
         	
         }else {
-        	ExceptionMessages error = new ExceptionMessages("Error","El ya existe en la BD");
+        	ExceptionMessages error = new ExceptionMessages("Error","El empleado ya existe en la BD");
 			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
         }
         
-    	 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
+    	 return new ResponseEntity<ExceptionMessages>(HttpStatus.OK);
 		
 	}
 
