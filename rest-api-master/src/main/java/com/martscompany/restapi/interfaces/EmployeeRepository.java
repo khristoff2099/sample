@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import com.martscompany.restapi.entity.Employee;
+import com.martscompany.restapi.entity.EmployeeWH;
 import com.martscompany.restapi.exceptions.ExceptionMessages;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Integer>, JpaSpecificationExecutor<Employee> {	
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee, Integer>, JpaSpecificationExecutor<EmployeeWH> {	
+	
 	 @Transactional
 	    @Modifying
 	 @Query(value = "SELECT * FROM employee e"
