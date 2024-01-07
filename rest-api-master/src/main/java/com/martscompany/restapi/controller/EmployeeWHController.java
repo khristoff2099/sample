@@ -30,11 +30,11 @@ public class EmployeeWHController {
 	@PostMapping("/addWH/{val}")//Ejercicio2
 	public  ResponseEntity<ExceptionMessages> addWH(@RequestBody EmployeeWH val) {
 			
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(LocalDate.now().format(formatter));
 
-		if(!fecha1.isAfter(fecha2)){
+		if(fecha1.isAfter(fecha2)){
 			
 			repo.findByWHE(val.getEmployee_id(),val.getWorked_hours(), val.geWorked_date()); 
 			
@@ -65,7 +65,7 @@ public class EmployeeWHController {
 	@GetMapping("/viewsWD/{val}")//Ejercicio4
 	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable EmployeeWH val){
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
 
@@ -81,7 +81,7 @@ public class EmployeeWHController {
 	@GetMapping("/viewsWS/{val}")//Ejercicio5
 	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable EmployeeWH val){
 		
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
 
