@@ -15,7 +15,7 @@ import com.martscompany.restapi.entity.Jobs;
 import com.martscompany.restapi.interfaces.JobsRepository;
 
 @RestController
-@RequestMapping(path="/Jobs")
+@RequestMapping(path="/jobs")
 public class JobsController {
 
 	
