@@ -76,7 +76,7 @@ public class EmployeeController {
 			 ExceptionMessages error = new ExceptionMessages("Not found","El puesto no existe");
 		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
 		 }
-		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
+		 return new ResponseEntity<ExceptionMessages>(HttpStatus.OK);
 	}
 	
 	@PutMapping("/update")
