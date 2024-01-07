@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `employee` (
   `job_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `last_name` varchar(80) NOT NULL,
-   `birthdate` date NOT NULL,
+   `birthdate` varchar(80)  NOT NULL,
   PRIMARY KEY (id)
 );
 
@@ -30,3 +30,4 @@ CREATE TABLE IF NOT EXISTS `employee_worked_hours` (
   `worked_date` date NOT NULL,
   PRIMARY KEY (id)
 );
+
