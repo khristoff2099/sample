@@ -36,7 +36,7 @@ public class EmployeeController {
         
         repo.findByEmp(val.getName(),val.getLast_name(),val.getGender_id(),val.getJob_id(), val.getBirthdate()); 
         
-        if(repo.toString() == null || repo.toString().isEmpty()) {
+        if(repo.toString() == null) {
         	
         	if(age.getYears() < today.getYear()-18){
         		repo.save(val);
