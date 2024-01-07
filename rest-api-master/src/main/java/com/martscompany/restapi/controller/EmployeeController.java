@@ -46,14 +46,8 @@ public class EmployeeController {
 	}
 
 	@GetMapping(value="/viewsJobEmp/{val}")//Ejercicio3
-	public Optional<Employee> viewsJobEmp(@PathVariable Employee val){			
-		 if(repo.findByJob(val.getJob_id()) != null) {
-			 repo.findByJobEmp(val.getJob_id());
-		 }else{
-			 ExceptionMessages error = new ExceptionMessages("Error","El puesto no existe");
-			 error.getMessage();
-		 }		 
-		 return repo.findByJobEmp(val.getJob_id());
+	public Optional<Employee> viewsJobEmp(@PathVariable Integer val){				 
+		 return repo.findByJobEmp(val);
 	}	
 	
 	@PutMapping(value="/update")

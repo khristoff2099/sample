@@ -16,7 +16,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
 	
 	 @Transactional
 	    @Modifying
-	 @Query(value = "SELECT * FROM employee e\r\n"
+	 @Query(value = "select * from employee e\r\n"
 	 		+ "inner join genders g\r\n"
 	 		+ "on g.id = e.gender_id\r\n"
 	 		+ "inner join jobs j\r\n"
@@ -30,19 +30,14 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
 	 
 	 @Transactional
 	    @Modifying
-	 @Query(value = "SELECT e.id, e.name,e.last_name,e.birthdate,j.name, g.name \r\n"
-	 		+ "FROM jobs j\r\n"
+	 @Query(value = "select e.id, e.name,e.last_name,e.birthdate,j.name, g.name \r\n"
+	 		+ "from jobs j\r\n"
 	 		+ "inner join employee e\r\n"
 	 		+ "on j.id = e.job_id\r\n"
 	 		+ "inner join genders g\r\n"
-	 		+ "on e.gender_id = g.id\r\n"
+	 		+ "on g.id = e.gender_id\r\n"
 	 		+ "where e.job_id = ?", nativeQuery = true)
-	 public Optional<Employee> findByJobEmp(@Param("job_id") Integer job_id);
+	 public Optional<Employee> findByJobEmp(@Param("job_id") Integer id);
 	 
-	 @Transactional
-	    @Modifying
-	 @Query(value = "select * from jobs where id = ?", nativeQuery = true)
-	 public Optional<Employee> findByJob(@Param("id") Integer id);
-
 }
 
