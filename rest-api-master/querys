@@ -27,7 +27,6 @@ CREATE TABLE IF NOT EXISTS `employee_worked_hours` (
   `id` int NOT NULL AUTO_INCREMENT,
   `employee_id` int NOT NULL,
   `worked_hours` int NOT NULL,
-  `worked_date` date NOT NULL,
+  `worked_date` varchar(30) NOT NULL,
   PRIMARY KEY (id)
 );
-

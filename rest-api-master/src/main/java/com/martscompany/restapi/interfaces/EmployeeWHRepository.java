@@ -14,13 +14,13 @@ public interface EmployeeWHRepository extends JpaRepository<EmployeeWH, Integer>
 	 
 	 @Transactional
 	    @Modifying
-	 @Query(value = "SELECT w.employee_id, w.worked_hours, w.worked_date"
-	 		+ "FROM employee_worked_hours w"
-	 		+ "inner join employee e on e.id = w.employee_id"
-	 		+ "WHERE w.worked_hours =< 20 and e.id=? and worked_hours = ? and worked_date = ?", nativeQuery = true)
+	 @Query(value = "SELECT w.employee_id, w.worked_hours, w.worked_date FROM employee_worked_hours w\r\n"
+	 		+ "inner join employee e \r\n"
+	 		+ "on e.id = w.employee_id\r\n"
+	 		+ "WHERE w.employee_id=? and w.worked_hours = ? and w.worked_date = ?", nativeQuery = true)
 	 public EmployeeWH findByWHE(@Param("employee_id") Integer employee_id,
-														@Param("worked_hours") Integer worked_hours,
-														@Param("worked_date") String worked_date);
+								 @Param("worked_hours") Integer worked_hours,
+								 @Param("worked_date") String worked_date);
 	 
 	 @Transactional
 	    @Modifying
@@ -33,15 +33,5 @@ public interface EmployeeWHRepository extends JpaRepository<EmployeeWH, Integer>
 	 @Query(value = "SELECT e.name, e.last_name, j.salary from jobs j inner join employee e on e.job_id = j.id inner join employee_worked_hours w on w.employee_id = e.id "
 			 + "WHERE e.id = ? and w.worked_date between ? and ? ", nativeQuery = true)
 	 public EmployeeWH findByWS(@Param("id") Integer id, @Param("worked_date") String worked_date_start,@Param("worked_date") String worked_date_end);
-	 
-	 @Transactional
-	    @Modifying
-	 @Query(value = "SELECT * from employee where id = ? ", nativeQuery = true)
-	 public EmployeeWH findByEmployeeExist(@Param("id") Integer id);
-	 
-	 @Transactional
-	    @Modifying
-	 @Query(value = "select * from employee_worked_hours where employee_id = ? and worked_date = ? ", nativeQuery = true)
-	 public EmployeeWH findByEmployeeWH(@Param("id") Integer id, @Param("worked_date") String worked_date);
 
 }

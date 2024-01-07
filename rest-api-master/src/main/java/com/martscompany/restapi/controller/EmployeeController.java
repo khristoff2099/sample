@@ -32,7 +32,7 @@ public class EmployeeController {
         LocalDate birth = LocalDate.parse(val.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
         Period age = birth.until(today);
                       					        	
-        	if(repo.findByEmp(val.getName(),val.getLast_name(),val.getGender_id(),val.getJob_id(),val.getBirthdate()) != null) {			        	
+        	if(repo.findByEmp(val.getName(),val.getLast_name(),val.getGender_id(),val.getJob_id(),val.getBirthdate()) == null) {			        	
 		        	if(age.getYears() < today.getYear()-18){
 		        		 repo.save(val);
 		    		}else{
