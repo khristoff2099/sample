@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.martscompany.restapi.entity.Employee;
-import com.martscompany.restapi.entity.Jobs;
 import com.martscompany.restapi.exceptions.ExceptionMessages;
 import com.martscompany.restapi.interfaces.EmployeeRepository;
 
