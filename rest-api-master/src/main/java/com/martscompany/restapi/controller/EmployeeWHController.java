@@ -2,6 +2,8 @@ package com.martscompany.restapi.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,11 +28,12 @@ public class EmployeeWHController {
 	@PostMapping(value="/addWH/")//Ejercicio2
 	public  EmployeeWH addWH(@RequestBody EmployeeWH val) {
 			
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault());
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
-		LocalDate fecha2 = LocalDate.parse(LocalDate.now().format(formatter));
-				
-				if(fecha1.isAfter(fecha2) && val.getWorked_hours() < 20){							
+		LocalDate fecha2 = LocalDate.now();
+						
+		if(val.getWorked_hours() < 20){			
+				if(fecha1.isBefore(fecha2)){							
 						if(repo.findByWHE(val.getEmployee_id(),val.getWorked_hours(), val.geWorked_date()) == null) {
 							 repo.save(val);
 			    		}else{
@@ -38,9 +41,13 @@ public class EmployeeWHController {
 			    			 error.getMessage();
 			    		}							 			 
 				}else{
-					 ExceptionMessages error = new ExceptionMessages("Error","Datos invalidos");
+					 ExceptionMessages error = new ExceptionMessages("Error","Fecha invalida");
 					 error.getMessage();
-				}						
+				}				
+		}else{
+			 ExceptionMessages error = new ExceptionMessages("Error","El empleado no puede tener mas de 20 horas registradas");
+			 error.getMessage();
+		}	
 				
 		return val;
 	}
