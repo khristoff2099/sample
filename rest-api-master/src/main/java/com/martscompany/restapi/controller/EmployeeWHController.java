@@ -3,8 +3,6 @@ package com.martscompany.restapi.controller;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +24,7 @@ public class EmployeeWHController {
 	private EmployeeWHRepository repo;
 	
 	@PostMapping(value="/addWH/")//Ejercicio2
-	public  ResponseEntity<ExceptionMessages> addWH(@RequestBody EmployeeWH val) {
+	public  EmployeeWH addWH(@RequestBody EmployeeWH val) {
 			
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
@@ -42,29 +40,29 @@ public class EmployeeWHController {
 									 repo.save(val);
 					    		}else{
 					    			 ExceptionMessages error = new ExceptionMessages("Error","El numero de horas no puede ser mayor a 20");
-								     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+					    			 error.getMessage();
 					    		}
 							 			 
 						}else{
 							 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
-						     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+							 error.getMessage();
 						}		
 				
 				}else{
 					ExceptionMessages error = new ExceptionMessages("Error","El empleado ya tiene registro de horas");
-					 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+					error.getMessage();
 				}
 				
 		}else{
 			ExceptionMessages error = new ExceptionMessages("Error","El empleado no existe");
-			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);	
+			error.getMessage();	
 		}
 		
-		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
+		return val;
 	}
 	
 	@GetMapping(value="/viewsWD/{val}")//Ejercicio4
-	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable EmployeeWH val){
+	public EmployeeWH viewsWD(@PathVariable EmployeeWH val){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
@@ -76,18 +74,18 @@ public class EmployeeWHController {
 				 return repo.findByWD(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
 			}else{
 				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
-			     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+				 error.getMessage();	
 			}
 			
 		}else {
 			 ExceptionMessages error = new ExceptionMessages("Error","El empleado no existe");
-			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+			 error.getMessage();	
 		}
-		
+		return val;
 	}
 	
 	@GetMapping(value="/viewsWS/{val}")//Ejercicio5
-	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable EmployeeWH val){
+	public EmployeeWH viewsWS(@PathVariable EmployeeWH val){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
@@ -99,13 +97,13 @@ public class EmployeeWHController {
 				 return repo.findByWS(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
 			}else{
 				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
-			     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+				 error.getMessage();	
 			}
 		}else{
 			ExceptionMessages error = new ExceptionMessages("Error","El empleado no existe");
-			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+			error.getMessage();	
 		}
-		
+		return val;
 	}
 	
 	@PutMapping(value="/update")
