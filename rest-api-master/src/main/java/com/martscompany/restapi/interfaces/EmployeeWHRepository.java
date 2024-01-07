@@ -26,16 +26,24 @@ public interface EmployeeWHRepository extends JpaRepository<EmployeeWH, Integer>
 	 
 	 @Transactional
 	    @Modifying
-	 @Query(value = "SELECT w.worked_hours FROM employee_worked_hours w INNER JOIN  employee e ON w.employee_id = e.id "	 		
+	 @Query(value = "SELECT e.name, e.last_name, w.worked_hours FROM employee_worked_hours w INNER JOIN  employee e ON w.employee_id = e.id "	 		
 	 + "WHERE  e.id = ? and w.worked_date between ? and ? ", nativeQuery = true)
 	 public ResponseEntity<ExceptionMessages> findByWD(@Param("id") Integer id, @Param("worked_date") String worked_date_start,@Param("worked_date") String worked_date_end);
 	 
 	 @Transactional
 	    @Modifying
-	 @Query(value = "SELECT j.salary from jobs j inner join employee e on e.job_id = j.id inner join employee_worked_hours w on w.employee_id = e.id "
+	 @Query(value = "SELECT e.name, e.last_name, j.salary from jobs j inner join employee e on e.job_id = j.id inner join employee_worked_hours w on w.employee_id = e.id "
 			 + "WHERE e.id = ? and w.worked_date between ? and ? ", nativeQuery = true)
 	 public ResponseEntity<ExceptionMessages> findByWS(@Param("id") Integer id, @Param("worked_date") String worked_date_start,@Param("worked_date") String worked_date_end);
 	 
-
+	 @Transactional
+	    @Modifying
+	 @Query(value = "SELECT * from employee where id = ? ", nativeQuery = true)
+	 public ResponseEntity<ExceptionMessages> findByEmployeeExist(@Param("id") Integer id);
+	 
+	 @Transactional
+	    @Modifying
+	 @Query(value = "select * from employee_worked_hours where employee_id = ? and worked_date = ? ", nativeQuery = true)
+	 public ResponseEntity<ExceptionMessages> findByEmployeeWH(@Param("id") Integer id, @Param("worked_date") String worked_date);
 
 }

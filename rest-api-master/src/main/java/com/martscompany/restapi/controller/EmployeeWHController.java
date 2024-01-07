@@ -33,22 +33,28 @@ public class EmployeeWHController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(LocalDate.now().format(formatter));
+		
+		if(repo.findByEmployeeWH(val.getId(),val.geWorked_date()) == null) {
 
-		if(fecha1.isAfter(fecha2)){
-			
-			repo.findByWHE(val.getEmployee_id(),val.getWorked_hours(), val.geWorked_date()); 
-			
-			if(repo == null){
-        		 repo.save(val);
-    		}else{
-    			 ExceptionMessages error = new ExceptionMessages("Error","El empleado ya tiene registro de horas");
-    			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
-    		}
-			 			 
-		}else{
-			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
-		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
-		}			
+				if(fecha1.isAfter(fecha2)){
+					
+						if(repo.findByWHE(val.getEmployee_id(),val.getWorked_hours(), val.geWorked_date()) == null) {
+							 repo.save(val);
+			    		}else{
+			    			 ExceptionMessages error = new ExceptionMessages("Error","El numero de horas no puede ser mayor a 20");
+						     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+			    		}
+					 			 
+				}else{
+					 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
+				     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+				}		
+		
+		}else {
+			ExceptionMessages error = new ExceptionMessages("Error","El empleado ya tiene registro de horas");
+			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+		}
+		
 		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 	}
 	
@@ -68,12 +74,19 @@ public class EmployeeWHController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
+		
+		if(repo.findByEmployeeExist(val.getEmployee_id()) != null){
 
-		if(fecha1.isAfter(fecha2)){
-			return repo.findByWD(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
-		}else{
-			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
-		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+			if(fecha1.isAfter(fecha2)){
+				 return repo.findByWD(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
+			}else{
+				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
+			     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+			}
+			
+		}else {
+			 ExceptionMessages error = new ExceptionMessages("Error","El empleado no existe");
+			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
 		}
 		
 	}
@@ -85,11 +98,17 @@ public class EmployeeWHController {
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
 
-		if(fecha1.isAfter(fecha2)){
-			return repo.findByWS(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
-		}else{
-			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
-		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+		if(repo.findByEmployeeExist(val.getEmployee_id()) != null){
+		
+			if(fecha1.isAfter(fecha2)){
+				 return repo.findByWS(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
+			}else{
+				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
+			     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+			}
+		}else {
+			ExceptionMessages error = new ExceptionMessages("Error","El empleado no existe");
+			 return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
 		}
 		
 	}
