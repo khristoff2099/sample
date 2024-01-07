@@ -62,6 +62,21 @@ public class EmployeeController {
 	@GetMapping("/views/{val}")
 	public Optional<Employee> views(@PathVariable Integer val){
 		return repo.findById(val);
+		
+	}
+	
+	@GetMapping("/viewsJobEmp/{val}")//Ejercicio3
+	public ResponseEntity<ExceptionMessages> viewsJobEmp(@PathVariable Employee val){
+		
+		 repo.findByJobEmp(val.getId(),val.getJob_id());
+		
+		 if(repo != null) {
+			 repo.findById(val.getId());
+		 }else{
+			 ExceptionMessages error = new ExceptionMessages("Not found","El puesto no existe");
+		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+		 }
+		 return new ResponseEntity<ExceptionMessages>( HttpStatus.OK);
 	}
 	
 	@PutMapping("/update")

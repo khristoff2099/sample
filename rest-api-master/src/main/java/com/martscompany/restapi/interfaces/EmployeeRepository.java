@@ -24,8 +24,15 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 			 											@Param("last_name") String val2,
 	 													@Param("gender_id") Integer val3,
 														@Param("job_id") Integer val4,
-														@Param("birthdate") String val5)
-	 ;
+														@Param("birthdate") String val5);
+	 
+	 @Transactional
+	    @Modifying
+	 @Query(value = "SELECT e.name,e.last_name,j.name FROM jobs j"
+	 		+ "inner join employee e"
+	 		+ "on j.id = e.job_id"
+	 		+ "where e.id = ? and e.job_id = ?", nativeQuery = true)
+	 public ResponseEntity<ExceptionMessages> findByJobEmp(@Param("id") Integer id, @Param("job_id") Integer job_id);
 
 }
 

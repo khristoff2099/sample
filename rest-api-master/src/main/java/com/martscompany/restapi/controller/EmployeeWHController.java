@@ -27,16 +27,16 @@ public class EmployeeWHController {
 	@Autowired
 	private EmployeeWHRepository repo;
 	
-	@PostMapping("/addWH/{val}/{val2}/{val3}")//Ejercicio2
-	public  ResponseEntity<ExceptionMessages> addWH(@RequestBody EmployeeWH val, EmployeeWH val2, EmployeeWH val3) {
+	@PostMapping("/addWH/{val}")//Ejercicio2
+	public  ResponseEntity<ExceptionMessages> addWH(@RequestBody EmployeeWH val) {
 			
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate fecha1 = LocalDate.parse(val3.geWorked_date(), formatter);
+		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(LocalDate.now().format(formatter));
 
 		if(!fecha1.isAfter(fecha2)){
 			
-			repo.findByWHE(val.getEmployee_id(),val2.getWorked_hours(), val3.geWorked_date()); 
+			repo.findByWHE(val.getEmployee_id(),val.getWorked_hours(), val.geWorked_date()); 
 			
 			if(repo == null){
         		 repo.save(val);
@@ -63,15 +63,31 @@ public class EmployeeWHController {
 		return repo.findById(val);
 	}
 	
-	@GetMapping("/viewsWD/{val}/{val2}/{val3}")//Ejercicio4
-	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable Integer val, @PathVariable String val2, @PathVariable String val3){
+	@GetMapping("/viewsWD/{val}")//Ejercicio4
+	public ResponseEntity<ExceptionMessages> viewsWD(@PathVariable EmployeeWH val){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate fecha1 = LocalDate.parse(val2, formatter);
-		LocalDate fecha2 = LocalDate.parse(val3, formatter);
+		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
+		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
 
 		if(fecha1.isAfter(fecha2)){
-			return repo.findByWD(val,val2,val3);
+			return repo.findByWD(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
+		}else{
+			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
+		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@GetMapping("/viewsWS/{val}")//Ejercicio5
+	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable EmployeeWH val){
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
+		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
+
+		if(fecha1.isAfter(fecha2)){
+			return repo.findByWS(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
 		}else{
 			 ExceptionMessages error = new ExceptionMessages("Not found","Fecha no valida");
 		     return new ResponseEntity<ExceptionMessages>(error, HttpStatus.BAD_REQUEST);
