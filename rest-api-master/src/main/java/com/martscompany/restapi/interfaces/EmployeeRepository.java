@@ -19,11 +19,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
 	 		+ "inner join jobs j"
 	 		+ "on j.id = e.job_id"
 	 		+ "WHERE e.name = ? and e.last_name = ? and g.id = ? and  j.id = ? and birthdate = ?", nativeQuery = true)
-	 public ResponseEntity<ExceptionMessages> findByEmp(@Param("name") String val,
-			 											@Param("last_name") String val2,
-	 													@Param("gender_id") Integer val3,
-														@Param("job_id") Integer val4,
-														@Param("birthdate") String val5);
+	 public ResponseEntity<ExceptionMessages> findByEmp(@Param("name") String name,
+			 											@Param("last_name") String last_name,
+	 													@Param("gender_id") Integer gender_id,
+														@Param("job_id") Integer job_id,
+														@Param("birthdate") String birthdate);
 	 
 	 @Transactional
 	    @Modifying

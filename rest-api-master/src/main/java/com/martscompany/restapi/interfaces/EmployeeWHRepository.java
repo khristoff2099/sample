@@ -20,9 +20,9 @@ public interface EmployeeWHRepository extends JpaRepository<EmployeeWH, Integer>
 	 		+ "FROM employee_worked_hours w"
 	 		+ "inner join employee e on e.id = w.employee_id"
 	 		+ "WHERE w.worked_hours < 20 and e.id=? and worked_hours = ? and worked_date = ?", nativeQuery = true)
-	 public ResponseEntity<ExceptionMessages> findByWHE(@Param("employee_id") Integer val,
-														@Param("worked_hours") Integer val2,
-														@Param("worked_date") String val3);
+	 public ResponseEntity<ExceptionMessages> findByWHE(@Param("employee_id") Integer employee_id,
+														@Param("worked_hours") Integer worked_hours,
+														@Param("worked_date") String worked_date);
 	 
 	 @Transactional
 	    @Modifying
