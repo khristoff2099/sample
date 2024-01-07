@@ -49,7 +49,7 @@ public class EmployeeController {
 	   return "Id : " +val+ " delete";
 	}
 	
-	@PostMapping("/addEmp/{val}/{val2}/{val3}/{val4}/{val5}")
+	@PostMapping("/addEmp/{val}/{val2}/{val3}/{val4}/{val5}") //Ejercicio1
 	public ResponseEntity<ExceptionMessages> addEmp(@RequestBody Employee val, Employee val2, Employee val3, Employee val4, Employee val5) {
 		LocalDate today = LocalDate.now();
         LocalDate birth = LocalDate.parse(val5.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));

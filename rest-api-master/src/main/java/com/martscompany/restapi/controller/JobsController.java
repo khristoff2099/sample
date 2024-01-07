@@ -53,7 +53,7 @@ public class JobsController {
 	   return "Id : " +val+ " delete";
 	}
 	
-	@GetMapping("/viewsWS/{val}/{val2}")
+	@GetMapping("/viewsWS/{val}/{val2}/{val3}")//Ejercicio5
 	public ResponseEntity<ExceptionMessages> viewsWS(@PathVariable Integer val, @PathVariable String val2, @PathVariable String val3){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -69,7 +69,7 @@ public class JobsController {
 		
 	}
 	
-	@GetMapping("/viewsJobEmp/{val}")
+	@GetMapping("/viewsJobEmp/{val}")//Ejercicio3
 	public ResponseEntity<ExceptionMessages> viewsJobEmp(@PathVariable Jobs val){
 		
 		 repo.findByJobEmp(val.getName());
