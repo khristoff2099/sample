@@ -5,6 +5,8 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,14 +47,16 @@ public class EmployeeController {
 	}
 	
 	@GetMapping(value="/viewsJob/{val}")//Ejercicio3
-	public Employee viewsJob(@PathVariable Employee val){
-		if(repo.findByEmpJob(val.getJob_id()) == null) {
+	public ResponseEntity<Employee> viewsJob(@PathVariable Employee val){
+		Employee employee = repo.findByEmpJob(val.getJob_id());
+		Employee employeeJob = repo.findByJob(val.getJob_id());
+		if(employee != null) {
 			 repo.findByJob(val.getJob_id());
 		}else{
 			 ExceptionMessages error = new ExceptionMessages("Error","No existe puesto");	
         	 error.getMessage();
 		}
-		return val;
+		return new ResponseEntity<>(employeeJob, HttpStatus.OK);
 	}
 	
 	@PutMapping(value="/update")

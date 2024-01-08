@@ -40,7 +40,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
 	 @Query(value = "select id, gender_id, job_id, name, last_name, job_id, birthdate\r\n"
 	 		+ "from employee\r\n"
 	 		+ "where job_id = ?", nativeQuery = true)
-	 public Employee findByJob(@Param("job_id") Integer job_id);
+	 public Employee findByJob(@Param("job_id") Integer val);
 	 
 }
 
