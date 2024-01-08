@@ -58,7 +58,7 @@ public class EmployeeWHController {
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
 		
-			if(fecha1.isAfter(fecha2)){
+			if(fecha1.isBefore(fecha2)){
 				 return repo.findByWD(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
 			}else{
 				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
@@ -75,7 +75,7 @@ public class EmployeeWHController {
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
 		LocalDate fecha2 = LocalDate.parse(val.geWorked_date(), formatter);
 		
-			if(fecha1.isAfter(fecha2)){
+			if(fecha1.isBefore(fecha2)){
 				 return repo.findByWS(val.getEmployee_id(),val.geWorked_date(),val.geWorked_date());
 			}else{
 				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
