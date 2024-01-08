@@ -44,9 +44,9 @@ public class EmployeeController {
         return val;
 	}
 	
-	@GetMapping(value="/viewsJob/{val}")//Ejercicio3
+	@GetMapping(value="/viewsJob/")//Ejercicio3
 	public Employee viewsJob(@PathVariable Employee val){
-		return repo.findByJob(val.getId());
+		return repo.findByJob(val.getJob_id());
 	}
 	
 	@PutMapping(value="/update")
