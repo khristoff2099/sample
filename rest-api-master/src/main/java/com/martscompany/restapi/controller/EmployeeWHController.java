@@ -51,7 +51,7 @@ public class EmployeeWHController {
 		return val;
 	}
 	
-	@GetMapping(value="/viewsWD/")//Ejercicio4
+	@GetMapping(value="/viewsWD/{val}")//Ejercicio4
 	public EmployeeWH viewsWD(@PathVariable EmployeeWH val){
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
