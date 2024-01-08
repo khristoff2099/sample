@@ -67,6 +67,7 @@ public class EmployeeWHController {
 			}else{
 				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
 				 error.getMessage();	
+				 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);   
 			}			
 			
 		return new ResponseEntity<>(employeeWH, HttpStatus.OK);
@@ -86,6 +87,7 @@ public class EmployeeWHController {
 			}else{
 				 ExceptionMessages error = new ExceptionMessages("Error","Fecha no valida");
 				 error.getMessage();	
+				 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);   
 			}		
 		return new ResponseEntity<>(employeeWH, HttpStatus.OK);
 	}

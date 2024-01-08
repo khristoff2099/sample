@@ -54,7 +54,8 @@ public class EmployeeController {
 			 repo.findByJob(val.getJob_id());
 		}else{
 			 ExceptionMessages error = new ExceptionMessages("Error","No existe puesto");	
-        	 error.getMessage();
+			 error.getMessage();
+			 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);        	
 		}
 		return new ResponseEntity<>(employeeJob, HttpStatus.OK);
 	}
