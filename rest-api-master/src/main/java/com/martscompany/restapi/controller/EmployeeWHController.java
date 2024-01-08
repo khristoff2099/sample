@@ -27,7 +27,7 @@ public class EmployeeWHController {
 	private EmployeeWHRepository repo;
 	
 	@PostMapping(value="/addWH/")//Ejercicio2
-	public  EmployeeWH addWH(@RequestBody EmployeeWH val) {
+	public  ResponseEntity<EmployeeWH> addWH(@RequestBody EmployeeWH val) {
 			
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault());
 		LocalDate fecha1 = LocalDate.parse(val.geWorked_date(), formatter);
@@ -40,17 +40,19 @@ public class EmployeeWHController {
 			    		}else{
 			    			 ExceptionMessages error = new ExceptionMessages("Error","El registro ya existe");
 			    			 error.getMessage();
+			    			 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 			    		}							 			 
 				}else{
 					 ExceptionMessages error = new ExceptionMessages("Error","Fecha invalida");
 					 error.getMessage();
+					 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 				}				
 		}else{
 			 ExceptionMessages error = new ExceptionMessages("Error","El empleado no puede tener mas de 20 horas registradas");
 			 error.getMessage();
+			 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 		}	
-				
-		return val;
+		return new ResponseEntity<>(val, HttpStatus.OK);  
 	}
 	
 	@GetMapping(value="/viewsWD/{val}")//Ejercicio4

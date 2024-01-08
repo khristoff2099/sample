@@ -27,7 +27,7 @@ public class EmployeeController {
 	private EmployeeRepository repo;
 	
 	@PostMapping(value="/addEmp/") //Ejercicio1
-	public Employee addEmp(@RequestBody Employee val) throws RuntimeException {
+	public ResponseEntity<Employee> addEmp(@RequestBody Employee val) throws RuntimeException {
 		LocalDate today = LocalDate.now();
         LocalDate birth = LocalDate.parse(val.getBirthdate(), DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.getDefault()));
         Period age = birth.until(today);
@@ -38,12 +38,14 @@ public class EmployeeController {
 		    		}else{
 		    			 ExceptionMessages error = new ExceptionMessages("Error","El empleado no es mayor de edad");	
 		    			 error.getMessage();
+		    			 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 		    		}				        	
 	        }else{
 	        	 ExceptionMessages error = new ExceptionMessages("Error","No existe clave de puesto");	
 	        	 error.getMessage();
-	        }			        				        			        		
-        return val;
+	        	 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+	        }		
+        	return new ResponseEntity<>(val, HttpStatus.OK);        
 	}
 	
 	@GetMapping(value="/viewsJob/{val}")//Ejercicio3
